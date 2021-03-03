@@ -1,17 +1,61 @@
-export const addNote = (note) =>{
+export const addNote = (note) => {
 
-    return (dispatch, getState, {getFirestore})=>{
+    return (dispatch, getState, { getFirestore }) => {
         const firestore = getFirestore()
         firestore.collection('notes')
-        .add({
-            ...note,
-            favorite: false,
-            createdAt: new Date()
+            .add({
+                ...note,
+                favorite: false,
+                createdAt: new Date()
+            })
+            .then(() => {
+                console.log('added note successfully')
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+}
+export const deleteNote = (note) => {
+    return (dispatch, getState, { getFirestore }) => {
+        const firestore = getFirestore()
+        firestore.collection('notes').doc(note.id).delete()
+            .then(() => {
+                console.log('deleted note successfully')
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+}
+
+
+export const toggleFav = (note) => {
+    return (dispatch, getState, { getFirestore }) => {
+        const favstatus = !note.favorite
+        const firestore = getFirestore()
+        firestore.collection('notes').doc(note.id).update({
+            favorite: favstatus
+        }).then(() => {
+            console.log('toggle favorite succcess')
+        }).catch(err => {
+            console.log(err)
         })
-        .then(()=>{
-            console.log('added note successfully')
-        })
-        .catch(err=>{
+    }
+}
+
+
+
+export const updateNote = (note) => {
+    return (dispatch, getState, { getFirestore }) => {
+       
+        const firestore = getFirestore()
+        firestore.collection('notes').doc(note.id).update({
+            title: note.title,
+            content: note.content
+        }).then(() => {
+            console.log('Edited succcess')
+        }).catch(err => {
             console.log(err)
         })
     }

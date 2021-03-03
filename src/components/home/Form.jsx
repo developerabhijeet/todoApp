@@ -1,23 +1,23 @@
 import { React } from 'react';
 import { useDispatch } from 'react-redux';
 import useInput from '../../customhook/useInput';
-import { addNote} from '../../store/actions/noteAction';
+import { addNote } from '../../store/actions/noteAction';
 
 
 const Form = () => {
-    const [title, bindTitle, resetTitle] = useInput()
-    const [content, bindContent, resetContent] = useInput()
+    const [title, bindTitle, resetTitle] = useInput();
+    const [content, bindContent, resetContent] = useInput();
     const dispatch = useDispatch();
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(addNote({title,content}))
+        dispatch(addNote({ title, content }))
         resetTitle()
         resetContent()
-    } 
+    }
     return (
         <div>
             <form onSubmit={handleSubmit} className="white">
-                <h5 className="gret-text text-darken-3">Add New Note</h5>
+                <h5 className="gret-text text-darken-3">Add New Note</h5><br />
 
                 <div className="input-field">
                     <input id="note_title" type="text" className="validate" {...bindTitle} />
